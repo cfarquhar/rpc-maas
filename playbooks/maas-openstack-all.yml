@@ -53,6 +53,11 @@
   tags:
     - maas-openstack
 
+- include: maas-openstack-rally.yml
+  tags:
+    - maas-openstack
+  when: maas_rally_enabled
+
 - include: maas-openstack-swift.yml
   tags:
     - maas-openstack

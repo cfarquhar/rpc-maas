@@ -241,6 +241,7 @@ maas_rally_check_default_template:
   user_password: "{{ maas_rally_users_password }}"
   alarm_consecutive_count: "{{ maas_rally_default_alarm_consecutive_count }}"
   extra_user_roles: []
+  extra_vars: {}
   per_iter_quotas:    # Resources required per iteration of the scenario. These
     instances: 0      # values are multipled by the scenario's concurrency.
     cores: 0

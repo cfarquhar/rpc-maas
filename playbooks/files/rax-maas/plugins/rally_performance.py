@@ -48,12 +48,17 @@ def make_parser():
                              'definition must exist in {{ maas_plugin_dir }}/ '
                              'tasks/<TASKNAME>.yml. \n'
                              'Examples: "keystone", "nova", etc.')
-    parser.add_argument('-t', '--times',
-                        type=int,
-                        help='Number of times to execute the task')
     parser.add_argument('-c', '--concurrency',
                         type=int,
                         help='Number of tasks to run in parallel')
+    parser.add_argument('-e', '--extra_vars',
+                        action='append',
+			help='Extra variable to pass to the Rally task in key='
+                             'value format.  May be specified multiple times. '
+                             'Example: "-e size=2 -e image_name=\'^my_test$\'"')
+    parser.add_argument('-t', '--times',
+                        type=int,
+                        help='Number of times to execute the task')
     parser.add_argument('--telegraf-output',
                         action='store_true',
                         default=False,
@@ -158,6 +163,10 @@ def main():
         task_args['times'] = args.times
     if args.concurrency is not None:
         task_args['concurrency'] = args.concurrency
+    if args.extra_vars is not None:
+        for extra_var in args.extra_vars:
+            k, v = extra_var.split('=')
+            task_args.update({k: v})
 
     with open(task_file) as f:
             input_task = f.read()
